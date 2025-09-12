@@ -1,0 +1,121 @@
+{
+  "relationship_issues": {
+    "title": "Relationship Support",
+    "description": "Navigate relationship challenges with compassionate guidance",
+    "features": {
+      "anonymous_threads": "Share experiences anonymously",
+      "guided_prompts": "Thoughtful reflection prompts",
+      "communication_resources": "Healthy communication guides",
+      "breathing_exercise": "Calming breathing exercises"
+    },
+    "welcome_message": "You're in a safe space to explore relationship concerns. Take your time.",
+    "resources": [
+      "Healthy Communication Patterns",
+      "Setting Boundaries in Relationships", 
+      "Dealing with Breakups",
+      "Building Self-Worth"
+    ]
+  },
+  "placement_career_anxiety": {
+    "title": "Career & Placement Support",
+    "description": "Manage career anxiety and placement stress with focused strategies",
+    "features": {
+      "coping_guides": "Evidence-based coping strategies",
+      "mentor_booking": "Connect with career mentors (anonymous)",
+      "resume_resources": "Resume and interview preparation",
+      "stress_relief": "Interactive stress-relief activities"
+    },
+    "welcome_message": "Career anxiety is common and manageable. Let's work through this together.",
+    "resources": [
+      "Interview Anxiety Management",
+      "Building Professional Confidence",
+      "Career Planning Strategies",
+      "Networking Without Stress"
+    ]
+  },
+  "academic_stress": {
+    "title": "Academic Wellness",
+    "description": "Balance academic demands with your mental well-being",
+    "features": {
+      "study_breaks": "Guided study break activities",
+      "planner_tracker": "Academic planning tools",
+      "micro_meditation": "Quick relaxation techniques",
+      "performance_tips": "Healthy performance strategies"
+    },
+    "welcome_message": "Academic stress is valid. Let's find sustainable ways to succeed.",
+    "resources": [
+      "Exam Anxiety Techniques",
+      "Time Management for Students",
+      "Perfectionism vs. Excellence",
+      "Study-Life Balance"
+    ]
+  },
+  "family_personal_issues": {
+    "title": "Personal & Family Support", 
+    "description": "Navigate personal and family challenges in a gentle space",
+    "features": {
+      "private_journaling": "Secure reflection space",
+      "resource_hub": "Curated support materials",
+      "counselor_connect": "Quick counselor access",
+      "coping_strategies": "Personal coping toolkits"
+    },
+    "welcome_message": "Family and personal issues can feel overwhelming. You're not alone.",
+    "resources": [
+      "Family Communication Strategies",
+      "Setting Personal Boundaries", 
+      "Dealing with Family Expectations",
+      "Building Independence"
+    ]
+  },
+  "sleep_burnout": {
+    "title": "Sleep & Recovery",
+    "description": "Restore healthy sleep patterns and prevent burnout",
+    "features": {
+      "sleep_sounds": "Calming sleep audio",
+      "hygiene_guides": "Sleep hygiene education",
+      "sleep_tracker": "Monitor sleep patterns",
+      "recovery_plans": "Burnout recovery strategies"
+    },
+    "welcome_message": "Quality sleep is essential for mental health. Let's improve your rest.",
+    "resources": [
+      "Sleep Hygiene Fundamentals",
+      "Managing Sleep Anxiety",
+      "Recognizing Burnout Signs",
+      "Recovery and Self-Care"
+    ]
+  },
+  "social_isolation": {
+    "title": "Social Connection",
+    "description": "Build meaningful connections and overcome loneliness",
+    "features": {
+      "peer_matching": "Connect with similar interests (anonymous)",
+      "group_sessions": "Join moderated group discussions",
+      "social_skills": "Social interaction guidance",
+      "community_building": "Campus community resources"
+    },
+    "welcome_message": "Feeling isolated is more common than you think. Connection is possible.",
+    "resources": [
+      "Overcoming Social Anxiety",
+      "Building Friendships in College",
+      "Joining Campus Communities",
+      "Managing Loneliness"
+    ]
+  },
+  "other_mixed": {
+    "title": "General Support",
+    "description": "Flexible support for various mental health concerns",
+    "features": {
+      "custom_resources": "Personalized resource recommendations",
+      "counselor_escalation": "Direct counselor connection",
+      "help_directory": "Comprehensive help resources",
+      "crisis_support": "24/7 crisis intervention"
+    },
+    "welcome_message": "Whatever you're facing, there are resources and people ready to help.",
+    "resources": [
+      "Crisis Intervention Resources",
+      "General Mental Health Education",
+      "Campus Support Services",
+      "Emergency Contacts"
+    ]
+  }
+}

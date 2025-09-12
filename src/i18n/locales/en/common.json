@@ -1,0 +1,108 @@
+{
+  "app": {
+    "name": "Student SafeSpace",
+    "tagline": "Your anonymous mental health companion",
+    "description": "A safe, stigma-free space for student mental health support"
+  },
+  "navigation": {
+    "home": "Home",
+    "screening": "Get Started", 
+    "chat": "Anonymous Chat",
+    "resources": "Resources",
+    "booking": "Talk to Counselor",
+    "tracker": "Progress Tracker",
+    "help": "Help"
+  },
+  "actions": {
+    "start_screening": "Start Screening",
+    "continue": "Continue",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "close": "Close",
+    "retry": "Try Again",
+    "skip": "Skip",
+    "learn_more": "Learn More",
+    "get_help": "Get Help Now"
+  },
+  "consent": {
+    "title": "Your Privacy & Consent",
+    "description": "We prioritize your privacy and anonymity. Please review and consent to the following:",
+    "data_processing": "I consent to anonymous data processing for mental health support",
+    "anonymous_chat": "I understand chat sessions are anonymous and encrypted",
+    "counselor_contact": "I may choose to connect with counselors (identity reveal optional)",
+    "emergency_notice": "If you're in immediate crisis, please call:",
+    "emergency_helpline": "National Suicide Prevention Lifeline: 988",
+    "privacy_policy": "Read our Privacy Policy",
+    "required_consent": "Consent is required to continue"
+  },
+  "language": {
+    "select": "Choose your language / अपनी भाषा चुनें / اپنی زبان کا انتخاب کریں",
+    "english": "English",
+    "hindi": "हिंदी (Hindi)",
+    "kashmiri": "کٲشُر (Kashmiri)",
+    "urdu": "اردو (Urdu)"
+  },
+  "screening": {
+    "title": "Mental Health Screening",
+    "subtitle": "Help us understand how you're feeling",
+    "progress": "Question {{current}} of {{total}}",
+    "phq9_intro": "Over the last 2 weeks, how often have you been bothered by any of the following problems?",
+    "gad7_intro": "Over the last 2 weeks, how often have you been bothered by the following problems?",
+    "completion": "Thank you for sharing. Based on your responses, we'll connect you with the most helpful resources."
+  },
+  "problems": {
+    "title": "Your Support Space",
+    "select_primary": "Primary concern:",
+    "also_struggling": "You might also find helpful:",
+    "emergency_notice": "Need immediate help? Our counselors are available 24/7"
+  },
+  "chat": {
+    "anonymous_notice": "You're chatting as {{handle}}",
+    "typing": "Someone is typing...",
+    "connection_status": "Connected to anonymous chat",
+    "message_placeholder": "Share your thoughts... (messages are encrypted)",
+    "report": "Report inappropriate content",
+    "leave": "Leave chat session",
+    "join_success": "Joined anonymous support chat",
+    "moderation_notice": "This chat is moderated for safety"
+  },
+  "booking": {
+    "title": "Connect with a Counselor",
+    "anonymous_default": "Your identity remains private by default",
+    "contact_methods": {
+      "phone": "Phone call",
+      "video": "Video session", 
+      "in_person": "In-person meeting"
+    },
+    "reveal_identity": "Reveal my identity to counselor",
+    "reveal_warning": "This action cannot be undone and will be logged",
+    "appointment_requested": "Appointment request sent anonymously"
+  },
+  "audio": {
+    "ambient_sounds": "Ambient Sounds",
+    "play": "Play relaxing sounds",
+    "pause": "Pause sounds",
+    "volume": "Volume",
+    "muted_mobile": "Audio starts muted on mobile devices"
+  },
+  "accessibility": {
+    "reduced_motion": "Reduced motion mode active",
+    "high_contrast": "High contrast mode",
+    "screen_reader": "Screen reader support enabled",
+    "keyboard_nav": "Navigate using Tab and Enter keys"
+  },
+  "errors": {
+    "connection_failed": "Connection failed. Please check your internet.",
+    "loading_error": "Something went wrong. Please try again.",
+    "invalid_input": "Please check your input and try again",
+    "session_expired": "Your session has expired. Please restart."
+  },
+  "success": {
+    "data_saved": "Your information has been saved securely",
+    "appointment_booked": "Appointment successfully requested",
+    "chat_joined": "Successfully joined anonymous chat"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "header": {
+    "menu": "Menu",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Sign Out",
+    "emergency": "Emergency Help"
+  },
+  "footer": {
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service", 
+    "contact": "Contact Us",
+    "accessibility": "Accessibility",
+    "about": "About SafeSpace"
+  },
+  "forms": {
+    "required_field": "This field is required",
+    "invalid_email": "Please enter a valid email",
+    "password_min": "Password must be at least 8 characters",
+    "confirm_password": "Passwords do not match",
+    "age_verification": "You must be 18 or have guardian consent"
+  },
+  "buttons": {
+    "primary": "Get Started",
+    "secondary": "Learn More",
+    "ghost": "Skip for Now",
+    "danger": "Delete",
+    "success": "Continue"
+  },
+  "status": {
+    "online": "Online",
+    "offline": "Offline", 
+    "connecting": "Connecting...",
+    "loading": "Loading...",
+    "saving": "Saving...",
+    "error": "Error occurred",
+    "success": "Success"
+  },
+  "tooltips": {
+    "anonymous": "Your identity is protected",
+    "encrypted": "All data is encrypted",
+    "moderated": "Content is monitored for safety",
+    "optional": "This field is optional",
+    "help": "Click for more information"
+  },
+  "modal": {
+    "close": "Close modal",
+    "confirm": "Confirm action",
+    "cancel": "Cancel action"
+  },
+  "pagination": {
+    "previous": "Previous page",
+    "next": "Next page",
+    "page": "Page {{number}}",
+    "of": "of {{total}}"
+  }
+}

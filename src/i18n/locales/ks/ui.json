@@ -1,0 +1,39 @@
+{
+  "header": {
+    "menu": "مینو",
+    "profile": "پروفائل",
+    "settings": "سیٹنگز",
+    "logout": "ساین آؤٹ",
+    "emergency": "ایمرجنسی مدد"
+  },
+  "footer": {
+    "privacy": "رازداری پالیسی",
+    "terms": "خدمات کی شرائط",
+    "contact": "رابطہ کرو",
+    "accessibility": "رسائی",
+    "about": "سیف سپیس کے بارے میں"
+  },
+  "forms": {
+    "required_field": "یہ فیلڈ ضروری چھے",
+    "invalid_email": "مہربانی کر کے درست ای میل درج کرو",
+    "password_min": "پاس ورڈ کم از کم 8 حروف کا ہونا چاہیے",
+    "confirm_password": "پاس ورڈ میل نہیں کھاتے",
+    "age_verification": "تُہان کس 18 سال ہونا چاہیے یا والدین کی رضامندی ہونی چاہیے"
+  },
+  "buttons": {
+    "primary": "شروع کرو",
+    "secondary": "مزید جانو",
+    "ghost": "ابھی کے لئے چھوڑو",
+    "danger": "ہٹاؤ",
+    "success": "جاری رکھو"
+  },
+  "status": {
+    "online": "آن لائن",
+    "offline": "آف لائن",
+    "connecting": "کنکٹ ہو ران چھو...",
+    "loading": "لوڈ ہو ران چھو...",
+    "saving": "سیو ہو ران چھو...",
+    "error": "غلطی بوئی",
+    "success": "کامیابی"
+  }
+}
