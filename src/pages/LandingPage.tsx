@@ -10,7 +10,8 @@ import {
   MessageCircle, 
   Calendar,
   BookOpen,
-  Headphones
+  Headphones,
+  ArrowRight
 } from 'lucide-react';
 import { useStore } from '@/stores/useStore';
 import { useNavigate } from 'react-router-dom';
@@ -115,19 +116,19 @@ const LandingPage = () => {
           >
             <Button
               size="lg"
-              onClick={handleStartScreening}
-              className="btn-ambient text-lg px-8 py-4"
+              onClick={() => navigate('/simple-onboarding')}
+              className="btn-ambient px-8 py-4 text-lg font-medium"
             >
-              {t('actions.start_screening')}
+              Quick Setup
+              <ArrowRight className="ml-3 w-6 h-6" />
             </Button>
-            
             <Button
-              variant="outline"
               size="lg"
-              onClick={() => navigate('/resources')}
-              className="text-lg px-8 py-4 glass-card"
+              variant="outline"
+              onClick={() => navigate('/onboarding')}
+              className="px-8 py-4 text-lg font-medium glass-card"
             >
-              {t('actions.learn_more')}
+              Full Assessment
             </Button>
           </motion.div>
 

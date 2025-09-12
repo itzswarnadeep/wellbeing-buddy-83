@@ -21,6 +21,7 @@ export interface Student {
   institutionCode: string;
   ephemeralHandle: string;
   language: string;
+  role?: 'student' | 'counsellor' | 'staff';
   consentFlags: {
     dataProcessing: boolean;
     anonymousChat: boolean;
