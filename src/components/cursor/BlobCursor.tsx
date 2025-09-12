@@ -4,12 +4,13 @@ import { motion, useMotionValue, useSpring } from 'framer-motion';
 export const BlobCursor = () => {
   const [mounted, setMounted] = useState(false);
   const [isPointer, setIsPointer] = useState(false);
+  const [cursorType, setCursorType] = useState<'default' | 'music' | 'game' | 'relaxation'>('default');
   const cursorRef = useRef<HTMLDivElement>(null);
   
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
   
-  const springConfig = { damping: 25, stiffness: 700 };
+  const springConfig = { damping: 20, stiffness: 400 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
@@ -30,6 +31,17 @@ export const BlobCursor = () => {
       if (target && typeof target.closest === 'function') {
         const isClickable = target.closest('a, button, [role="button"], input, textarea, select');
         setIsPointer(!!isClickable);
+        
+        // Detect cursor context for different themes
+        if (target.closest('[data-cursor="music"]')) {
+          setCursorType('music');
+        } else if (target.closest('[data-cursor="game"]')) {
+          setCursorType('game');
+        } else if (target.closest('[data-cursor="relaxation"]')) {
+          setCursorType('relaxation');
+        } else {
+          setCursorType('default');
+        }
       }
     };
 
@@ -64,6 +76,15 @@ export const BlobCursor = () => {
 
   if (!mounted) return null;
 
+  const getCursorGradient = () => {
+    switch (cursorType) {
+      case 'music': return 'bg-gradient-to-r from-accent to-success';
+      case 'game': return 'bg-gradient-to-r from-warning to-primary';
+      case 'relaxation': return 'bg-gradient-to-r from-success to-accent';
+      default: return 'bg-gradient-to-r from-primary to-accent';
+    }
+  };
+
   return (
     <motion.div
       ref={cursorRef}
@@ -73,16 +94,26 @@ export const BlobCursor = () => {
         y: cursorYSpring,
       }}
       animate={{
-        scale: isPointer ? 1.5 : 1,
-        opacity: isPointer ? 0.8 : 0.6,
+        scale: isPointer ? 1.8 : 1.2,
+        opacity: isPointer ? 0.9 : 0.7,
       }}
       transition={{
         type: "spring",
-        damping: 20,
-        stiffness: 300,
+        damping: 15,
+        stiffness: 200,
       }}
     >
-      <div className="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-accent opacity-60" />
+      <motion.div 
+        className={`w-12 h-12 rounded-full ${getCursorGradient()} opacity-70`}
+        animate={{
+          rotate: cursorType !== 'default' ? 360 : 0,
+        }}
+        transition={{
+          duration: cursorType !== 'default' ? 2 : 0,
+          repeat: cursorType !== 'default' ? Infinity : 0,
+          ease: "linear"
+        }}
+      />
     </motion.div>
   );
 };

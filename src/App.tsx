@@ -10,6 +10,7 @@ import LandingPage from "./pages/LandingPage";
 import OnboardingFlow from "./pages/OnboardingFlow";
 import SimpleOnboarding from "./pages/SimpleOnboarding";
 import StudentDashboard from "./pages/StudentDashboard";
+import CounsellorLandingPage from "./pages/CounsellorLandingPage";
 import ProblemInterface from "./pages/problems/ProblemInterface";
 import ChatPage from "./pages/ChatPage";
 import BookingPage from "./pages/BookingPage";
@@ -34,6 +35,7 @@ const App = () => (
             <Route path="/onboarding" element={<OnboardingFlow />} />
             <Route path="/simple-onboarding" element={<SimpleOnboarding />} />
             <Route path="/dashboard" element={<StudentDashboard />} />
+            <Route path="/counsellor" element={<CounsellorLandingPage />} />
             <Route path="/problems/:problemId" element={<ProblemInterface />} />
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/booking" element={<BookingPage />} />

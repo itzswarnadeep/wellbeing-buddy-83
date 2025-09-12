@@ -16,8 +16,14 @@ import {
   Clock,
   MapPin,
   Star,
-  Shield
+  Shield,
+  Heart,
+  ArrowLeft,
+  Home
 } from 'lucide-react';
+import { MindfulnessGames } from '@/components/games/MindfulnessGames';
+import { RelaxationHub } from '@/components/music/RelaxationHub';
+import { PeerEngagement } from '@/components/social/PeerEngagement';
 import { useStore } from '@/stores/useStore';
 
 // Mock counsellor data
@@ -65,34 +71,40 @@ const StudentDashboard = () => {
 
   const quickActions = [
     {
-      title: 'Start Anonymous Chat',
-      description: 'Connect instantly with available counsellors',
-      icon: MessageCircle,
+      title: 'Mindful Games',
+      description: 'Interactive wellness games and challenges',
+      icon: Users,
       color: 'primary',
-      action: () => navigate('/chat')
+      section: 'games',
+      cursorType: 'game'
     },
     {
-      title: 'Book Appointment', 
-      description: 'Schedule a session with your preferred counsellor',
-      icon: Calendar,
+      title: 'Relaxation Hub', 
+      description: 'Soothing music and ambient sounds',
+      icon: Heart,
       color: 'accent',
-      action: () => navigate('/booking')
+      section: 'music',
+      cursorType: 'music'
     },
     {
-      title: 'Resource Library',
-      description: 'Self-help articles, videos, and workshops',
-      icon: BookOpen,
+      title: 'Peer Connect',
+      description: 'Community challenges and peer support',
+      icon: Star,
       color: 'success',
-      action: () => navigate('/resources')
+      section: 'social',
+      cursorType: 'relaxation'
     },
     {
-      title: 'Emergency Support',
-      description: '24/7 crisis helpline and immediate assistance',
-      icon: AlertCircle,
-      color: 'destructive',
-      action: () => navigate('/emergency')
+      title: 'Quick Chat',
+      description: 'Anonymous support when you need it',
+      icon: MessageCircle,
+      color: 'warning',
+      action: () => navigate('/chat'),
+      cursorType: 'default'
     }
   ];
+
+  const [activeSection, setActiveSection] = useState<'overview' | 'games' | 'music' | 'social'>('overview');
 
   const getContactIcon = (method: string) => {
     switch (method) {
@@ -113,22 +125,54 @@ const StudentDashboard = () => {
     }
   };
 
+  const handleSectionClick = (action: { section?: string; action?: () => void; cursorType: string }) => {
+    if (action.section) {
+      setActiveSection(action.section as any);
+    } else if (action.action) {
+      action.action();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-soothing relative overflow-hidden">
-      {/* Background Elements */}
+      {/* Live Wallpaper Background */}
       <div className="absolute inset-0 bg-gradient-ambient opacity-20" />
+      <div className="absolute inset-0">
+        <div className="absolute top-10 left-10 w-80 h-80 bg-primary/3 rounded-full blur-3xl animate-pulse float" />
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-accent/3 rounded-full blur-3xl animate-pulse float" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-success/3 rounded-full blur-3xl animate-pulse float" style={{ animationDelay: '4s' }} />
+        <div className="absolute top-20 right-1/4 w-64 h-64 bg-warning/3 rounded-full blur-3xl animate-pulse float" style={{ animationDelay: '1s' }} />
+      </div>
       
       {/* Header */}
       <div className="relative z-10 p-6">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-between items-center mb-8">
-            <div>
-              <h1 className="text-3xl font-bold text-foreground mb-2">
-                Welcome back, {student?.ephemeralHandle}
-              </h1>
-              <p className="text-muted-foreground">
-                Connected to {student?.institutionCode} • Anonymous & Secure
-              </p>
+            <div className="flex items-center gap-4">
+              {activeSection !== 'overview' && (
+                <Button
+                  variant="ghost"
+                  onClick={() => setActiveSection('overview')}
+                  className="flex items-center gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back
+                </Button>
+              )}
+              <div>
+                <h1 className="text-3xl font-bold text-foreground mb-2">
+                  {activeSection === 'overview' && `Welcome back, ${student?.ephemeralHandle}`}
+                  {activeSection === 'games' && 'Mindful Games'}
+                  {activeSection === 'music' && 'Relaxation Hub'}
+                  {activeSection === 'social' && 'Peer Connect'}
+                </h1>
+                <p className="text-muted-foreground">
+                  {activeSection === 'overview' && `Connected to ${student?.institutionCode} • Anonymous & Secure`}
+                  {activeSection === 'games' && 'Interactive wellness activities for your mental health'}
+                  {activeSection === 'music' && 'Soothing sounds and music for relaxation'}
+                  {activeSection === 'social' && 'Connect with peers and join wellness challenges'}
+                </p>
+              </div>
             </div>
             <Badge variant="outline" className="px-4 py-2">
               <Shield className="w-4 h-4 mr-2" />
@@ -140,133 +184,110 @@ const StudentDashboard = () => {
 
       {/* Main Content */}
       <div className="relative z-10 px-6 pb-12">
-        <div className="max-w-6xl mx-auto space-y-8">
+        <div className="max-w-6xl mx-auto">
           
-          {/* Quick Actions - Magic Bento Layout */}
-          <section>
-            <h2 className="text-2xl font-semibold mb-6">Quick Actions</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {quickActions.map((action, index) => {
-                const IconComponent = action.icon;
-                return (
-                  <motion.div
-                    key={action.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <Card 
-                      className={`glass-card p-6 hover:scale-105 transition-all duration-200 cursor-pointer border ${getColorClass(action.color)}`}
-                      onClick={action.action}
-                    >
-                      <div className="flex flex-col items-center text-center space-y-4">
-                        <div className={`p-4 rounded-full ${getColorClass(action.color)}`}>
-                          <IconComponent className="w-8 h-8" />
-                        </div>
-                        <div>
-                          <h3 className="font-semibold mb-2">{action.title}</h3>
-                          <p className="text-sm text-muted-foreground">{action.description}</p>
-                        </div>
-                      </div>
-                    </Card>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </section>
+          {/* Overview Section */}
+          {activeSection === 'overview' && (
+            <div className="space-y-8">
+              {/* Quick Actions - Magic Bento Layout */}
+              <section>
+                <h2 className="text-2xl font-semibold mb-6">Wellness Dashboard</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {quickActions.map((action, index) => {
+                    const IconComponent = action.icon;
+                    return (
+                      <motion.div
+                        key={action.title}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <Card 
+                          className={`glass-card p-6 hover:scale-105 transition-all duration-200 cursor-pointer border ${getColorClass(action.color)}`}
+                          onClick={() => handleSectionClick(action)}
+                          data-cursor={action.cursorType}
+                        >
+                          <div className="flex flex-col items-center text-center space-y-4">
+                            <div className={`p-4 rounded-full ${getColorClass(action.color)}`}>
+                              <IconComponent className="w-8 h-8" />
+                            </div>
+                            <div>
+                              <h3 className="font-semibold mb-2">{action.title}</h3>
+                              <p className="text-sm text-muted-foreground">{action.description}</p>
+                            </div>
+                          </div>
+                        </Card>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </section>
 
-          {/* Available Counsellors */}
-          <section>
-            <h2 className="text-2xl font-semibold mb-6">Available Counsellors</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-              {COUNSELLORS.map((counsellor, index) => (
-                <motion.div
-                  key={counsellor.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.15 }}
-                >
-                  <Card className="glass-card p-6 hover:shadow-lg transition-all duration-200">
-                    <div className="space-y-4">
-                      {/* Header */}
-                      <div className="flex justify-between items-start">
+              {/* Mood Check-in */}
+              <section>
+                <Card className="glass-card p-6">
+                  <h3 className="text-xl font-semibold mb-4">Quick Mood Check-in</h3>
+                  <p className="text-muted-foreground mb-4">How are you feeling today?</p>
+                  <div className="flex gap-3 justify-center">
+                    {['😊', '😐', '😔', '😴', '😤'].map((emoji, index) => (
+                      <Button
+                        key={index}
+                        variant="outline"
+                        className="w-16 h-16 text-2xl hover:scale-110 transition-all"
+                      >
+                        {emoji}
+                      </Button>
+                    ))}
+                  </div>
+                </Card>
+              </section>
+
+              {/* Quick Counsellor Access */}
+              <section>
+                <h2 className="text-2xl font-semibold mb-6">Available Support</h2>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {COUNSELLORS.slice(0, 2).map((counsellor, index) => (
+                    <Card key={counsellor.id} className="glass-card p-6">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className="p-3 rounded-full bg-primary/10">
+                          <Users className="w-6 h-6 text-primary" />
+                        </div>
                         <div>
-                          <h3 className="font-semibold text-lg">{counsellor.name}</h3>
+                          <h4 className="font-semibold">{counsellor.name}</h4>
                           <p className="text-sm text-muted-foreground">{counsellor.designation}</p>
-                          <p className="text-xs text-muted-foreground">{counsellor.department}</p>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                          <span className="text-sm font-medium">{counsellor.rating}</span>
                         </div>
                       </div>
-
-                      {/* Specializations */}
-                      <div className="flex flex-wrap gap-2">
-                        {counsellor.specializations.map((spec) => (
-                          <Badge key={spec} variant="secondary" className="text-xs">
-                            {spec}
-                          </Badge>
-                        ))}
-                      </div>
-
-                      {/* Contact Methods */}
-                      <div className="flex gap-2">
-                        {counsellor.contactMethods.map((method) => {
-                          const IconComponent = getContactIcon(method);
-                          return (
-                            <div 
-                              key={method}
-                              className="flex items-center gap-1 px-2 py-1 bg-muted/20 rounded text-xs"
-                            >
-                              <IconComponent className="w-3 h-3" />
-                              <span className="capitalize">{method}</span>
-                            </div>
-                          );
-                        })}
-                      </div>
-
-                      {/* Available Slots */}
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <Clock className="w-4 h-4 text-muted-foreground" />
-                          <span className="text-sm font-medium">Next Available</span>
-                        </div>
-                        <div className="space-y-1">
-                          {counsellor.availableSlots.slice(0, 2).map((slot) => (
-                            <div key={slot} className="text-sm text-success">
-                              {slot}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Action Buttons */}
-                      <div className="flex gap-2 pt-4">
-                        <Button 
-                          size="sm" 
-                          className="flex-1"
-                          onClick={() => navigate(`/chat?counsellor=${counsellor.id}`)}
-                        >
-                          <MessageCircle className="w-4 h-4 mr-2" />
-                          Chat Now
-                        </Button>
-                        <Button 
-                          size="sm" 
-                          variant="outline" 
-                          className="flex-1"
-                          onClick={() => navigate(`/booking?counsellor=${counsellor.id}`)}
-                        >
-                          <Calendar className="w-4 h-4 mr-2" />
-                          Book
-                        </Button>
-                      </div>
-                    </div>
-                  </Card>
-                </motion.div>
-              ))}
+                      <Button className="w-full" onClick={() => navigate('/chat')}>
+                        <MessageCircle className="w-4 h-4 mr-2" />
+                        Start Anonymous Chat
+                      </Button>
+                    </Card>
+                  ))}
+                </div>
+              </section>
             </div>
-          </section>
+          )}
+
+          {/* Games Section */}
+          {activeSection === 'games' && (
+            <div data-cursor="game">
+              <MindfulnessGames />
+            </div>
+          )}
+
+          {/* Music Section */}
+          {activeSection === 'music' && (
+            <div data-cursor="music">
+              <RelaxationHub />
+            </div>
+          )}
+
+          {/* Social Section */}
+          {activeSection === 'social' && (
+            <div data-cursor="relaxation">
+              <PeerEngagement />
+            </div>
+          )}
         </div>
       </div>
     </div>
