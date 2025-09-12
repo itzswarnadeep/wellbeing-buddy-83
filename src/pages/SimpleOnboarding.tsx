@@ -88,112 +88,255 @@ const SimpleOnboarding = () => {
     return false;
   };
 
+  const playSelectionSound = () => {
+    try {
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+      
+      oscillator.start();
+      oscillator.stop(audioContext.currentTime + 0.3);
+    } catch (e) {
+      console.log('Audio not available');
+    }
+  };
+
   const renderInstitutionStep = () => (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
+      exit={{ opacity: 0, y: -30 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       className="space-y-6"
     >
-      <div className="text-center mb-8">
-        <Shield className="w-12 h-12 text-primary mx-auto mb-4" />
-        <h2 className="text-2xl font-semibold mb-2">
+      <motion.div 
+        className="text-center mb-8"
+        initial={{ scale: 0.9 }}
+        animate={{ scale: 1 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+      >
+        <motion.div
+          animate={{ rotateY: [0, 360] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+          className="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center"
+        >
+          <Shield className="w-8 h-8 text-white" />
+        </motion.div>
+        <motion.h2 
+          className="text-3xl font-bold mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
           Select your institution
-        </h2>
-        <p className="text-muted-foreground text-sm">
-          Only your institution is shared with counsellors; your identity stays private.
-        </p>
-      </div>
+        </motion.h2>
+        <motion.p 
+          className="text-muted-foreground text-sm max-w-md mx-auto"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
+          Only your institution is shared with counsellors; your identity stays completely private.
+        </motion.p>
+      </motion.div>
 
-      <Card className="glass-card p-6">
-        <Label htmlFor="institution-search" className="font-medium mb-3 block">
-          Search for your institution
-        </Label>
-        <input
-          id="institution-search"
-          type="text"
-          placeholder="Start typing your institution name..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full p-3 border border-border rounded-lg bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
-        />
-        
-        <div className="mt-4 space-y-2 max-h-60 overflow-y-auto">
-          <AnimatePresence>
-            {filteredInstitutions.map((inst, index) => (
-              <motion.button
-                key={inst}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ delay: index * 0.05 }}
-                onClick={() => setInstitution(inst)}
-                className={`w-full text-left p-3 rounded-lg transition-all ${
-                  institution === inst 
-                    ? 'bg-primary/10 border-primary/30 text-primary' 
-                    : 'bg-card hover:bg-card/80 border border-border'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-medium">{inst}</span>
-                  {institution === inst && <CheckCircle className="w-5 h-5" />}
-                </div>
-              </motion.button>
-            ))}
-          </AnimatePresence>
-        </div>
-      </Card>
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+      >
+        <Card className="glass-card p-8 backdrop-blur-lg border-2 border-white/20 shadow-2xl">
+          <Label htmlFor="institution-search" className="font-semibold mb-4 block text-lg">
+            🏫 Search for your institution
+          </Label>
+          <motion.input
+            id="institution-search"
+            type="text"
+            placeholder="Start typing your institution name..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full p-4 border-2 border-border rounded-2xl bg-background/80 focus:outline-none focus:ring-4 focus:ring-primary/30 focus:border-primary transition-all duration-300 text-lg"
+            whileFocus={{ scale: 1.02 }}
+          />
+          
+          <div className="mt-6 space-y-3 max-h-80 overflow-y-auto custom-scrollbar">
+            <AnimatePresence>
+              {filteredInstitutions.map((inst, index) => (
+                <motion.button
+                  key={inst}
+                  initial={{ opacity: 0, x: -20, scale: 0.95 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  exit={{ opacity: 0, x: 20, scale: 0.95 }}
+                  transition={{ 
+                    delay: index * 0.08,
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 20
+                  }}
+                  whileHover={{ 
+                    scale: 1.02,
+                    y: -2,
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    setInstitution(inst);
+                    playSelectionSound();
+                  }}
+                  className={`w-full text-left p-5 rounded-2xl transition-all duration-300 transform group ${
+                    institution === inst 
+                      ? 'bg-gradient-to-r from-primary/20 to-accent/20 border-2 border-primary/50 text-primary shadow-lg' 
+                      : 'bg-card/60 hover:bg-card/80 border-2 border-transparent hover:border-primary/20 hover:shadow-md'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-lg group-hover:text-primary transition-colors">
+                      {inst}
+                    </span>
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: institution === inst ? 1 : 0 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <CheckCircle className="w-6 h-6 text-primary" />
+                    </motion.div>
+                  </div>
+                </motion.button>
+              ))}
+            </AnimatePresence>
+          </div>
+        </Card>
+      </motion.div>
     </motion.div>
   );
 
   const renderRoleStep = () => (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
+      exit={{ opacity: 0, y: -30 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       className="space-y-6"
     >
-      <div className="text-center mb-8">
-        <CheckCircle className="w-12 h-12 text-success mx-auto mb-4" />
-        <h2 className="text-2xl font-semibold mb-2">
+      <motion.div 
+        className="text-center mb-8"
+        initial={{ scale: 0.9 }}
+        animate={{ scale: 1 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+      >
+        <motion.div
+          animate={{ 
+            scale: [1, 1.1, 1],
+            rotate: [0, 5, -5, 0]
+          }}
+          transition={{ 
+            duration: 2, 
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-r from-success to-accent flex items-center justify-center"
+        >
+          <CheckCircle className="w-8 h-8 text-white" />
+        </motion.div>
+        <motion.h2 
+          className="text-3xl font-bold mb-3 bg-gradient-to-r from-success to-accent bg-clip-text text-transparent"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
           I am a
-        </h2>
-        <p className="text-muted-foreground text-sm">
-          This helps us connect you with the right resources.
-        </p>
-      </div>
+        </motion.h2>
+        <motion.p 
+          className="text-muted-foreground text-sm max-w-md mx-auto"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
+          This helps us connect you with the right resources and support network.
+        </motion.p>
+      </motion.div>
 
-      <Card className="glass-card p-6">
-        <RadioGroup value={role} onValueChange={setRole}>
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+      >
+        <Card className="glass-card p-8 backdrop-blur-lg border-2 border-white/20 shadow-2xl">
           <div className="space-y-4">
             {ROLES.map((roleOption, index) => (
               <motion.div
                 key={roleOption.value}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className={`flex items-center space-x-3 p-4 rounded-lg border transition-all cursor-pointer ${
+                initial={{ opacity: 0, x: -30, scale: 0.9 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                transition={{ 
+                  delay: index * 0.15,
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 20
+                }}
+                whileHover={{ 
+                  scale: 1.03,
+                  y: -3,
+                  transition: { duration: 0.2 }
+                }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => {
+                  setRole(roleOption.value);
+                  playSelectionSound();
+                }}
+                className={`flex items-center space-x-4 p-6 rounded-2xl border-2 transition-all cursor-pointer group transform ${
                   role === roleOption.value 
-                    ? 'bg-primary/10 border-primary/30' 
-                    : 'bg-card hover:bg-card/80 border-border'
+                    ? 'bg-gradient-to-r from-primary/20 to-accent/20 border-primary/50 shadow-lg' 
+                    : 'bg-card/60 hover:bg-card/80 border-transparent hover:border-primary/20 hover:shadow-md'
                 }`}
               >
-                <RadioGroupItem 
-                  value={roleOption.value} 
-                  id={roleOption.value}
-                  className="text-primary"
-                />
-                <Label 
-                  htmlFor={roleOption.value} 
-                  className="flex-1 font-medium cursor-pointer"
+                <motion.div
+                  animate={{ 
+                    scale: role === roleOption.value ? [1, 1.2, 1] : 1,
+                    rotate: role === roleOption.value ? [0, 360] : 0
+                  }}
+                  transition={{ duration: 0.5 }}
+                  className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                    role === roleOption.value
+                      ? 'border-primary bg-primary'
+                      : 'border-muted group-hover:border-primary'
+                  }`}
                 >
+                  {role === roleOption.value && (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="w-3 h-3 bg-white rounded-full"
+                    />
+                  )}
+                </motion.div>
+                <Label 
+                  className="flex-1 font-semibold text-xl cursor-pointer group-hover:text-primary transition-colors"
+                >
+                  {roleOption.label === 'Student' && '🎓 '}
+                  {roleOption.label === 'Counsellor' && '👨‍⚕️ '}
+                  {roleOption.label === 'Staff' && '👥 '}
                   {roleOption.label}
                 </Label>
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: role === roleOption.value ? 1 : 0 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <CheckCircle className="w-6 h-6 text-primary" />
+                </motion.div>
               </motion.div>
             ))}
           </div>
-        </RadioGroup>
-      </Card>
+        </Card>
+      </motion.div>
     </motion.div>
   );
 
@@ -228,18 +371,29 @@ const SimpleOnboarding = () => {
 
           {/* Navigation */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="flex justify-center mt-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+            className="flex justify-center mt-12"
           >
-            <Button
-              onClick={handleNext}
-              disabled={!canProceed()}
-              className="flex items-center gap-2 px-8 py-3"
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              {currentStep === totalSteps - 1 ? 'Get Started' : 'Continue'}
-              <ArrowRight className="w-4 h-4" />
-            </Button>
+              <Button
+                onClick={handleNext}
+                disabled={!canProceed()}
+                className="flex items-center gap-3 px-12 py-4 text-lg font-semibold rounded-2xl bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {currentStep === totalSteps - 1 ? '🚀 Get Started' : '✨ Continue'}
+                <motion.div
+                  animate={{ x: canProceed() ? [0, 5, 0] : 0 }}
+                  transition={{ repeat: Infinity, duration: 1.5 }}
+                >
+                  <ArrowRight className="w-5 h-5" />
+                </motion.div>
+              </Button>
+            </motion.div>
           </motion.div>
         </div>
       </div>

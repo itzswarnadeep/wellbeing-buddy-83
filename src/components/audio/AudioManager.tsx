@@ -152,18 +152,8 @@ const AudioControls: React.FC = () => {
         <Button
           variant="ghost"
           size="sm"
-          onClick={audio.isPlaying ? audio.pause : () => audio.play('ambient')}
-          className="p-2"
-          aria-label={audio.isPlaying ? 'Pause ambient audio' : 'Play ambient audio'}
-        >
-          {audio.isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-        </Button>
-        
-        <Button
-          variant="ghost"
-          size="sm"
           onClick={audio.toggleMute}
-          className="p-2"
+          className="p-2 hover:bg-primary/10 transition-colors"
           aria-label={audio.isMuted ? 'Unmute audio' : 'Mute audio'}
         >
           {audio.isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
@@ -177,7 +167,7 @@ const AudioControls: React.FC = () => {
             step="0.1"
             value={audio.volume}
             onChange={(e) => audio.setVolume(parseFloat(e.target.value))}
-            className="w-16 h-1 bg-muted rounded-lg appearance-none cursor-pointer"
+            className="w-16 h-1 bg-muted rounded-lg appearance-none cursor-pointer slider-thumb"
             aria-label="Volume control"
           />
         )}
