@@ -11,6 +11,7 @@ A comprehensive mental health and wellbeing platform designed specifically for s
 - **Wellness Tracking**: Mood logging, goal setting, habit tracking, and journaling
 - **Crisis Intervention**: Automated crisis detection with immediate support resources
 
+
 ### Advanced Features
 - **Accessibility Compliance**: Full WCAG 2.1 AA compliance with screen reader support
 - **Multi-language Support**: Internationalization ready with language switching
